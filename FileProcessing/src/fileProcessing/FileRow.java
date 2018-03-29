@@ -21,17 +21,6 @@ public class FileRow {
 		return "FileRow [elementsOnRow=" + elementsOnRow + "]";
 	}
 
-	public void swapElementsOnRow(int index1, int index2) throws Exception {
 
-		if (FileParser.between(index1, 1, this.elementsOnRow.size())
-				&& FileParser.between(index2, 1, this.elementsOnRow.size())) {
-			BigInteger temp = this.elementsOnRow.get(index1 - 1);
-			this.elementsOnRow.set(index1 - 1, this.elementsOnRow.get(index2 - 1));
-			this.elementsOnRow.set(index2 - 1, temp);
-		} else {
-			throw new Exception("Number index not found.");
-		}
-	}
-	
 
 }

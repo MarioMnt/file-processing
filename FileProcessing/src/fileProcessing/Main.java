@@ -64,17 +64,13 @@ public class Main {
 						int row2 = input.nextInt();
 						System.out.print("Number index in line of the second number: ");
 						int index2 = input.nextInt();
-						if (row1 == row2) {
-							fileParser.getRowAtPosition(row1).swapElementsOnRow(index1, index2);
-							fileParser.writeDataToFile();
-							System.out.println("Done! \n");
-							break;
-						} else {
+						
+						
 							fileParser.swapElementsFromDiffRows(row1, index1, row2, index2);
 							fileParser.writeDataToFile();
 							System.out.println("Done! \n");
 							break;
-						}
+						
 					} catch (InputMismatchException e) {
 						System.out.println("Invalid input. Indexes must be whole numbers.");
 						return;
@@ -89,7 +85,7 @@ public class Main {
 						int index1 = input.nextInt();
 						System.out.println("Enter number to be inserted: ");
 						BigInteger newBigInt = new BigInteger(input.next());
-						fileParser.getRowAtPosition(row1).getElementsOnRow().add(index1 - 1, newBigInt);
+						fileParser.addElement(row1-1, index1-1, newBigInt);
 						fileParser.writeDataToFile();
 						System.out.println("Done! \n");
 						break;
@@ -104,7 +100,7 @@ public class Main {
 						int row1 = input.nextInt();
 						System.out.print("Number index in line: ");
 						int index1 = input.nextInt();
-						System.out.println(fileParser.getRowAtPosition(row1).getElementsOnRow().get(index1));
+						System.out.println(fileParser.getElement(row1-1, index1-1));
 						fileParser.writeDataToFile();
 						System.out.println("Done! \n");
 						break;
@@ -123,7 +119,7 @@ public class Main {
 						int index1 = input.nextInt();
 						System.out.println("Enter new number value: ");
 						BigInteger newBigInt = new BigInteger(input.next());
-						fileParser.getRowAtPosition(row1).getElementsOnRow().set(index1 - 1, newBigInt);
+						fileParser.setElement(row1-1, index1-1, newBigInt);
 						fileParser.writeDataToFile();
 						System.out.println("Done! \n");
 						break;
@@ -142,7 +138,7 @@ public class Main {
 						int row1 = input.nextInt();
 						System.out.print("Number index in line: ");
 						int index1 = input.nextInt();
-						fileParser.getRowAtPosition(row1).getElementsOnRow().remove(index1 - 1);
+						fileParser.removeElement(row1-1, index1-1);
 						fileParser.writeDataToFile();
 						System.out.println("Done! \n");
 						break;
