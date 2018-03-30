@@ -89,11 +89,16 @@ public class Main {
 						fileParser.writeDataToFile();
 						System.out.println("Done! \n");
 						break;
-					} catch (InputMismatchException e) {
+					} catch (InputMismatchException | NumberFormatException e) {
+						if(e instanceof NumberFormatException) {
+							System.out.println("Invalid input. Whole number expected.");
+							return;
+						}
 						System.out.println("Invalid input. Indexes must be whole numbers.");
 						return;
 					}
-				}
+					}
+				
 				case 4: {
 					try {
 						System.out.print("Line index: ");
@@ -156,19 +161,21 @@ public class Main {
 				}
 			}
 			input.close();
-		} catch (Exception e) {
-			if (e instanceof InputMismatchException) {
-				System.out.println("Invalid input. Integer expected.");
-				return;
-			}
-			if (e instanceof FileNotFoundException) {
-				System.out.println("Invalid input. String expected.");
-				return;
-			}
-			System.out.println(e.getMessage());
+		}catch(
 
+	Exception e)
+	{
+		if (e instanceof InputMismatchException) {
+			System.out.println("Invalid input. Integer expected.");
 			return;
 		}
+		if (e instanceof FileNotFoundException) {
+			System.out.println("Invalid input. String expected.");
+			return;
+		}
+		System.out.println(e.getMessage());
 
+		return;
 	}
-}
+
+}}

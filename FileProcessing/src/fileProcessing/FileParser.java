@@ -140,14 +140,14 @@ public class FileParser {
 
 	}
 
-	public void setElement(int row, int index, BigInteger number) {
-		if (FileParser.between(row, 1, this.rows.size()) && FileParser.between(index, 1, this.getSizeOf(row))) {
+	public void setElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException {
+		if (FileParser.between(row, 0, this.rows.size()-1) && FileParser.between(index, 0, this.getSizeOf(row)-1)) {
 			this.rows.get(row).getElementsOnRow().set(index, number);
 		} else
 			throw new IndexOutOfBoundsException("Index not found!");
 	}
 
-	public BigInteger getElement(int row, int index) {
+	public BigInteger getElement(int row, int index) throws IndexOutOfBoundsException {
 		if (FileParser.between(row, 0, this.rows.size()-1) && FileParser.between(index, 0, this.getSizeOf(row)-1)) {
 			return (this.rows.get(row).getElementsOnRow().get(index));
 		} else
