@@ -23,18 +23,20 @@ public class Main {
 
 			fileParser.loadFileAsObjects();
 			UserInput userIn = new UserInput(input);
-
+			
 			userIn.showMenu();
-
+			//0. Exit.
 			while (userIn.getOption() != 0) {
 
 				switch (userIn.getOption()) {
+				//1. Switch entire line from the file with another line.
 				case 1: {
 					userIn.askLineSwap();
 					fileParser.swapRows(userIn.getIndex(), userIn.getLine());
 					fileParser.writeDataToFile();
 					break;
 				}
+				//2. Switch TWO elements from the file.
 				case 2: {
 
 					UserInput secondElem = new UserInput(input);
@@ -48,6 +50,7 @@ public class Main {
 					break;
 
 				}
+				//3. Insert a new number at a wanted position.
 				case 3: {
 
 					userIn.askForElement();
@@ -59,13 +62,13 @@ public class Main {
 				}
 
 				case 4: {
-
+					//4. Get a number from the file.
 					userIn.askForElement();
 					System.out.println(fileParser.getElement(userIn.getLine() - 1, userIn.getIndex() - 1));
 					break;
 				}
 				case 5: {
-
+					//5. Modify a number in the file.
 					userIn.askForElement();
 					userIn.askForBigInt();
 					fileParser.setElement(userIn.getLine() - 1, userIn.getIndex() - 1, userIn.getBigInt());
@@ -74,7 +77,7 @@ public class Main {
 
 				}
 				case 6: {
-
+					//6. Remove a number at wanted position.
 					userIn.askForElement();
 					fileParser.removeElement(userIn.getLine() - 1, userIn.getIndex() - 1);
 					fileParser.writeDataToFile();

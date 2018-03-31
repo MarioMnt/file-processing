@@ -38,7 +38,7 @@ public class FileParser {
 
 				if (line.isEmpty() || Character.isWhitespace(line.charAt(0)))
 
-					throw new NumberFormatException("Line " + lineCount + " starts with whitespace.");
+					throw new IllegalArgumentException("Line " + lineCount + " starts with whitespace.");
 
 				FileRow row = new FileRow();
 
@@ -50,7 +50,7 @@ public class FileParser {
 						continue;
 					}
 					if (eachElement.startsWith("0")) {
-						throw new NoSuchFieldException("Numbers can not start with 0. (On line " + lineCount + ")");
+						throw new IllegalArgumentException("Numbers can not start with 0. (On line " + lineCount + ")");
 					}
 					try {
 						BigInteger number = new BigInteger(eachElement);
