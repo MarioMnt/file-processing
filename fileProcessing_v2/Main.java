@@ -33,7 +33,7 @@ public class Main {
 				case 1: {
 					userIn.askLineSwap();
 					fileParser.swapRows(userIn.getIndex(), userIn.getLine());
-					fileParser.writeDataToFile();
+					
 					break;
 				}
 				//2. Switch TWO elements from the file.
@@ -45,7 +45,7 @@ public class Main {
 
 					fileParser.swapElementsFromDiffRows(userIn.getLine(), userIn.getIndex(), secondElem.getLine(),
 							secondElem.getIndex());
-					fileParser.writeDataToFile();
+					
 					secondElem = null;
 					break;
 
@@ -56,7 +56,7 @@ public class Main {
 					userIn.askForElement();
 					userIn.askForBigInt();
 					fileParser.addElement(userIn.getLine(), userIn.getIndex(), userIn.getBigInt());
-					fileParser.writeDataToFile();
+					
 					break;
 
 				}
@@ -72,7 +72,6 @@ public class Main {
 					userIn.askForElement();
 					userIn.askForBigInt();
 					fileParser.setElement(userIn.getLine(), userIn.getIndex(), userIn.getBigInt());
-					fileParser.writeDataToFile();
 					break;
 
 				}
@@ -80,7 +79,6 @@ public class Main {
 					//6. Remove a number at wanted position.
 					userIn.askForElement();
 					fileParser.removeElement(userIn.getLine(), userIn.getIndex() );
-					fileParser.writeDataToFile();
 					break;
 
 				}

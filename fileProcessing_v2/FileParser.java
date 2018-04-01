@@ -108,24 +108,24 @@ public class FileParser {
 	}
 
 	public void swapRows(int row1, int row2) throws Exception {
-		int javaRow1 = row1 - 1;
-		int javaRow2 = row2 - 1;
 		// Checks if the provided indexes correspond to existing elements. If so, runs
 		// the if-body.
 		if (FileParser.between(row1, 1, this.rows.size()) && FileParser.between(row2, 1, this.rows.size())) {
-			FileRow tempRow = this.rows.get(javaRow1);
-			this.rows.set(javaRow1, this.rows.get(javaRow2));
-			this.rows.set(javaRow2, tempRow);
+			FileRow tempRow = this.rows.get(row1-1);
+			this.rows.set(row1-1, this.rows.get(row2-1));
+			this.rows.set(row2-1, tempRow);
+			this.writeDataToFile();
 		} else {
 			throw new IndexOutOfBoundsException("Line index not found.");
 		}
 	}
 
-	public void swapElementsFromDiffRows(int row1, int index1, int row2, int index2) {
+	public void swapElementsFromDiffRows(int row1, int index1, int row2, int index2) throws FileNotFoundException, IOException {
 
 		BigInteger tempBigInt = this.getElement(row1, index1);
 		this.setElement(row1, index1, this.getElement(row2, index2));
 		this.setElement(row2, index2, tempBigInt);
+		this.writeDataToFile();
 	}
 
 	public static boolean between(int variable, int lowerBound, int upperBound) {
@@ -135,10 +135,11 @@ public class FileParser {
 
 	}
 
-	public void setElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException {
+	public void setElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException, FileNotFoundException, IOException {
 		if (this.elementExists(row, index)) {
 
 			this.rows.get(row - 1).getElementsOnRow().set(index - 1, number);
+			this.writeDataToFile();
 		}
 
 	}
@@ -148,23 +149,27 @@ public class FileParser {
 
 		}
 		return (this.rows.get(row - 1).getElementsOnRow().get(index - 1));
+		
 
 	}
 
-	public void addElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException {
+	public void addElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException, FileNotFoundException, IOException {
 		try {
 			if (this.elementExists(row, index))
 				this.rows.get(row - 1).getElementsOnRow().add(index - 1, number);
+			this.writeDataToFile();
 		} catch (IndexOutOfBoundsException e) {
 			if (this.elementExists(row, index - 1))
 				this.rows.get(row - 1).getElementsOnRow().add(index - 1, number);
+			this.writeDataToFile();
 		}
 
 	}
 
-	public void removeElement(int row, int index) throws IndexOutOfBoundsException {
+	public void removeElement(int row, int index) throws IndexOutOfBoundsException, FileNotFoundException, IOException {
 		if (this.elementExists(row, index)) {
 			this.rows.get(row - 1).getElementsOnRow().remove(index - 1);
+			this.writeDataToFile();
 		}
 
 	}
