@@ -124,7 +124,7 @@ public class FileParser {
 	public void swapElementsFromDiffRows(int row1, int index1, int row2, int index2) {
 
 		BigInteger tempBigInt = this.getElement(row1, index1);
-		this.setElement(row1, index1, this.getElement(row2 , index2));
+		this.setElement(row1, index1, this.getElement(row2, index2));
 		this.setElement(row2, index2, tempBigInt);
 	}
 
@@ -136,51 +136,52 @@ public class FileParser {
 	}
 
 	public void setElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException {
-		if (!this.elementExists(row, index)) {
+		if (this.elementExists(row, index)) {
 
-			throw new IndexOutOfBoundsException("Index not found!");
+			this.rows.get(row - 1).getElementsOnRow().set(index - 1, number);
 		}
-		this.rows.get(row-1).getElementsOnRow().set(index-1, number);
+
 	}
 
 	public BigInteger getElement(int row, int index) throws IndexOutOfBoundsException {
-		if (!this.elementExists(row, index)) {
-			throw new IndexOutOfBoundsException("Index not found!");
+		if (this.elementExists(row, index)) {
 
 		}
-		return (this.rows.get(row-1).getElementsOnRow().get(index-1));
+		return (this.rows.get(row - 1).getElementsOnRow().get(index - 1));
 
 	}
 
 	public void addElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException {
-		if (!this.elementExists(row, index) && !this.elementExists(row, index-1)) {
-			throw new IndexOutOfBoundsException("Index not found!");
+		try {
+			if (this.elementExists(row, index))
+				this.rows.get(row - 1).getElementsOnRow().add(index - 1, number);
+		} catch (IndexOutOfBoundsException e) {
+			if (this.elementExists(row, index - 1))
+				this.rows.get(row - 1).getElementsOnRow().add(index - 1, number);
 		}
 
-		this.rows.get(row-1).getElementsOnRow().add(index-1, number);
-		
 	}
 
 	public void removeElement(int row, int index) throws IndexOutOfBoundsException {
-		if (!this.elementExists(row, index)) {
-			throw new IndexOutOfBoundsException("Index not found!");
+		if (this.elementExists(row, index)) {
+			this.rows.get(row - 1).getElementsOnRow().remove(index - 1);
 		}
-		this.rows.get(row-1).getElementsOnRow().remove(index-1);
+
 	}
 
 	public int getSizeOf(int row) throws IndexOutOfBoundsException {
 		if (!FileParser.between(row, 1, this.rows.size())) {
 			throw new IndexOutOfBoundsException("Index not found!");
 		}
-		return (this.rows.get(row-1).getElementsOnRow().size());
+		return (this.rows.get(row - 1).getElementsOnRow().size());
 
 	}
 
-	public boolean elementExists(int row, int index) {
+	public boolean elementExists(int row, int index) throws IndexOutOfBoundsException {
 		if (FileParser.between(row, 1, this.rows.size()) && FileParser.between(index, 1, this.getSizeOf(row))) {
 			return true;
 		}
-		return false;
+		throw new IndexOutOfBoundsException("Index not found!");
 
 	}
 }
