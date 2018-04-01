@@ -26,7 +26,7 @@ public class UserInput {
 	public UserInput() {
 
 	}
-
+	
 	public Scanner getInput() {
 		return input;
 	}
@@ -48,19 +48,28 @@ public class UserInput {
 		System.out.print("Enter number to be inserted: ");
 		this.bigInt = this.input.nextBigInteger();
 	}
+	public void setLine(int line) {
+		this.row=line;
+	}
 
 	public int getLine() {
 		return this.row;
 	}
-
+	public void setIndex(int index) {
+		this.index=index;
+	}
 	public int getIndex() {
 		return this.index;
 	}
-
+	public void setBigInt(BigInteger bigInt) {
+		this.bigInt=bigInt;
+	}
 	public BigInteger getBigInt() {
 		return this.bigInt;
 	}
-
+	public void setOption(int option) {
+		this.option=option;
+	}
 	public int getOption() {
 		return this.option;
 	}

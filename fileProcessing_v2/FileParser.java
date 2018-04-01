@@ -20,12 +20,11 @@ public class FileParser {
 	private File inputFile;
 	private List<FileRow> rows = new ArrayList<>();
 
-	public void tryLoadFile(String filePath) throws Exception {
+	public void tryLoadFile(String filePath) throws FileNotFoundException {
 		this.inputFile = new File(filePath);
 		if (!this.inputFile.exists()) {
-			throw new Exception("File does not exist");
+			throw new FileNotFoundException();
 		}
-
 	}
 
 	public void loadFileAsObjects() throws Exception {
@@ -70,7 +69,7 @@ public class FileParser {
 	}
 
 	public void writeDataToFile() throws FileNotFoundException, IOException {
-		/// this will autoclose the file if exception occurs since java8
+		/// this will autoclose the file writer if exception occurs since java8
 		try (BufferedWriter outputStream = new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream(inputFile)))) {
 			for (FileRow eachRow : rows) {
@@ -124,9 +123,9 @@ public class FileParser {
 
 	public void swapElementsFromDiffRows(int row1, int index1, int row2, int index2) {
 
-		BigInteger tempBigInt = this.getElement(row1 - 1, index1 - 1);
-		this.setElement(row1 - 1, index1 - 1, this.getElement(row2 - 1, index2 - 1));
-		this.setElement(row2 - 1, index2 - 1, tempBigInt);
+		BigInteger tempBigInt = this.getElement(row1, index1);
+		this.setElement(row1, index1, this.getElement(row2 , index2));
+		this.setElement(row2, index2, tempBigInt);
 	}
 
 	public static boolean between(int variable, int lowerBound, int upperBound) {
@@ -141,7 +140,7 @@ public class FileParser {
 
 			throw new IndexOutOfBoundsException("Index not found!");
 		}
-		this.rows.get(row).getElementsOnRow().set(index, number);
+		this.rows.get(row-1).getElementsOnRow().set(index-1, number);
 	}
 
 	public BigInteger getElement(int row, int index) throws IndexOutOfBoundsException {
@@ -149,35 +148,36 @@ public class FileParser {
 			throw new IndexOutOfBoundsException("Index not found!");
 
 		}
-		return (this.rows.get(row).getElementsOnRow().get(index));
+		return (this.rows.get(row-1).getElementsOnRow().get(index-1));
 
 	}
 
 	public void addElement(int row, int index, BigInteger number) throws IndexOutOfBoundsException {
-		if (!this.elementExists(row, index)) {
+		if (!this.elementExists(row, index) && !this.elementExists(row, index-1)) {
 			throw new IndexOutOfBoundsException("Index not found!");
 		}
 
-		this.rows.get(row).getElementsOnRow().add(index, number);
+		this.rows.get(row-1).getElementsOnRow().add(index-1, number);
+		
 	}
 
 	public void removeElement(int row, int index) throws IndexOutOfBoundsException {
 		if (!this.elementExists(row, index)) {
 			throw new IndexOutOfBoundsException("Index not found!");
 		}
-		this.rows.get(row).getElementsOnRow().remove(index);
+		this.rows.get(row-1).getElementsOnRow().remove(index-1);
 	}
 
 	public int getSizeOf(int row) throws IndexOutOfBoundsException {
-		if (!FileParser.between(row, 0, this.rows.size() - 1)) {
+		if (!FileParser.between(row, 1, this.rows.size())) {
 			throw new IndexOutOfBoundsException("Index not found!");
 		}
-		return (this.rows.get(row).getElementsOnRow().size());
+		return (this.rows.get(row-1).getElementsOnRow().size());
 
 	}
 
 	public boolean elementExists(int row, int index) {
-		if (FileParser.between(row, 0, this.rows.size() - 1) && FileParser.between(index, 0, this.getSizeOf(row) - 1)) {
+		if (FileParser.between(row, 1, this.rows.size()) && FileParser.between(index, 1, this.getSizeOf(row))) {
 			return true;
 		}
 		return false;

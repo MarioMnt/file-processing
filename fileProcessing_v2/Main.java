@@ -20,7 +20,7 @@ public class Main {
 			String filePath = input.nextLine();
 
 			fileParser.tryLoadFile(filePath);
-
+			
 			fileParser.loadFileAsObjects();
 			UserInput userIn = new UserInput(input);
 			
@@ -55,7 +55,7 @@ public class Main {
 
 					userIn.askForElement();
 					userIn.askForBigInt();
-					fileParser.addElement(userIn.getLine() - 1, userIn.getIndex() - 1, userIn.getBigInt());
+					fileParser.addElement(userIn.getLine(), userIn.getIndex(), userIn.getBigInt());
 					fileParser.writeDataToFile();
 					break;
 
@@ -64,14 +64,14 @@ public class Main {
 				case 4: {
 					//4. Get a number from the file.
 					userIn.askForElement();
-					System.out.println(fileParser.getElement(userIn.getLine() - 1, userIn.getIndex() - 1));
+					System.out.println(fileParser.getElement(userIn.getLine() , userIn.getIndex()));
 					break;
 				}
 				case 5: {
 					//5. Modify a number in the file.
 					userIn.askForElement();
 					userIn.askForBigInt();
-					fileParser.setElement(userIn.getLine() - 1, userIn.getIndex() - 1, userIn.getBigInt());
+					fileParser.setElement(userIn.getLine(), userIn.getIndex(), userIn.getBigInt());
 					fileParser.writeDataToFile();
 					break;
 
@@ -79,7 +79,7 @@ public class Main {
 				case 6: {
 					//6. Remove a number at wanted position.
 					userIn.askForElement();
-					fileParser.removeElement(userIn.getLine() - 1, userIn.getIndex() - 1);
+					fileParser.removeElement(userIn.getLine(), userIn.getIndex() );
 					fileParser.writeDataToFile();
 					break;
 
@@ -88,7 +88,7 @@ public class Main {
 				userIn.showMenu();
 
 			}
-			input.close();
+			
 		} catch (
 
 		Exception e) {
